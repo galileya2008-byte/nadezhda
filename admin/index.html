@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Админка — Надя о балансе</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="admin-shell">
+    <header class="admin-header">
+      <div>
+        <p class="admin-kicker">Надя о балансе</p>
+        <h1>Админка сайта</h1>
+      </div>
+      <div class="admin-header-actions">
+        <a class="btn btn-ghost" href="../index.html" target="_blank" rel="noopener">Открыть сайт</a>
+        <button type="button" class="btn btn-ghost" id="btn-logout" hidden>Выйти</button>
+      </div>
+    </header>
+
+    <section class="panel" id="login-panel">
+      <h2>Вход</h2>
+      <p class="hint">
+        Для сохранения изменений нужен GitHub-токен с доступом к репозиторию
+        <a href="https://github.com/galileya2008-byte/nadezhda" target="_blank" rel="noopener">galileya2008-byte/nadezhda</a>.
+        Токен хранится только в вашем браузере.
+      </p>
+      <label class="field">
+        <span>GitHub Personal Access Token</span>
+        <input type="password" id="github-token" autocomplete="off" placeholder="ghp_… или github_pat_…">
+      </label>
+      <p class="hint">
+        <a href="https://github.com/settings/tokens/new?description=Nadya+site+admin&scopes=repo" target="_blank" rel="noopener">Создать токен</a>
+        — отметьте доступ <strong>repo</strong> (или только этот репозиторий).
+      </p>
+      <button type="button" class="btn" id="btn-login">Войти и загрузить данные</button>
+      <p class="status" id="login-status" role="status"></p>
+    </section>
+
+    <div id="app" hidden>
+      <nav class="tabs" role="tablist">
+        <button type="button" class="tab is-active" data-tab="workshops" role="tab">Мастерские</button>
+        <button type="button" class="tab" data-tab="articles" role="tab">Статьи</button>
+      </nav>
+
+      <section class="panel tab-panel is-active" id="tab-workshops" role="tabpanel">
+        <div class="panel-head">
+          <h2>Мастерские</h2>
+          <button type="button" class="btn btn-sm" id="btn-add-workshop">+ Новая мастерская</button>
+        </div>
+        <label class="field">
+          <span>Примечание под расписанием</span>
+          <input type="text" id="schedule-note">
+        </label>
+        <div id="workshops-list" class="cards"></div>
+        <div class="panel-foot">
+          <button type="button" class="btn" id="btn-save-workshops">Сохранить мастерские на сайте</button>
+          <p class="status" id="workshops-status" role="status"></p>
+        </div>
+      </section>
+
+      <section class="panel tab-panel" id="tab-articles" role="tabpanel" hidden>
+        <div class="panel-head">
+          <h2>Статьи</h2>
+          <button type="button" class="btn btn-sm" id="btn-add-article">+ Новая статья</button>
+        </div>
+        <div id="articles-list" class="cards"></div>
+        <div class="panel-foot">
+          <button type="button" class="btn" id="btn-save-articles">Сохранить статьи на сайте</button>
+          <p class="status" id="articles-status" role="status"></p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <template id="workshop-template">
+    <article class="card">
+      <div class="card-head">
+        <h3 class="card-title">Мастерская</h3>
+        <button type="button" class="btn-icon btn-delete" title="Удалить">×</button>
+      </div>
+      <div class="grid-2">
+        <label class="field"><span>Slug (латиница, для URL)</span><input data-field="slug" required pattern="[a-z0-9-]+"></label>
+        <label class="field"><span>Эмодзи</span><input data-field="emoji" maxlength="4"></label>
+      </div>
+      <label class="field"><span>Название</span><input data-field="title" required></label>
+      <label class="field"><span>Краткое описание</span><textarea data-field="excerpt" rows="2" required></textarea></label>
+      <div class="grid-2">
+        <label class="field"><span>Формат</span><input data-field="format" placeholder="Онлайн · программа"></label>
+        <label class="field"><span>Длительность</span><input data-field="duration" placeholder="8 недель"></label>
+      </div>
+      <div class="grid-2">
+        <label class="field"><span>Дата начала (YYYY-MM-DD)</span><input data-field="date" type="date" required></label>
+        <label class="field"><span>Подпись даты</span><input data-field="dateLabel" placeholder="10 сентября — 5 ноября" required></label>
+      </div>
+      <div class="grid-3">
+        <label class="field">
+          <span>Статус</span>
+          <select data-field="status">
+            <option value="open">Набор открыт</option>
+            <option value="closed">Набор закрыт</option>
+          </select>
+        </label>
+        <label class="field"><span>Надпись о местах</span><input data-field="spots" placeholder="набор открыт"></label>
+        <label class="field"><span>Цена</span><input data-field="price" placeholder="уточняется при записи"></label>
+      </div>
+      <label class="field"><span>Текст для Telegram при записи</span><textarea data-field="telegramText" rows="2" required></textarea></label>
+    </article>
+  </template>
+
+  <template id="article-template">
+    <article class="card">
+      <div class="card-head">
+        <h3 class="card-title">Статья</h3>
+        <button type="button" class="btn-icon btn-delete" title="Удалить">×</button>
+      </div>
+      <div class="grid-2">
+        <label class="field"><span>Slug (латиница, для URL)</span><input data-field="slug" required pattern="[a-z0-9-]+"></label>
+        <label class="field"><span>Дата публикации</span><input data-field="date" type="date" required></label>
+      </div>
+      <label class="field"><span>Заголовок</span><input data-field="title" required></label>
+      <label class="field"><span>Краткое описание (для списка и SEO)</span><textarea data-field="excerpt" rows="2" required></textarea></label>
+      <div class="grid-2">
+        <label class="field"><span>Категория</span><input data-field="category" placeholder="Баланс с собой"></label>
+        <label class="field"><span>Ключевые слова</span><input data-field="keywords" placeholder="выгорание, баланс"></label>
+      </div>
+      <label class="field">
+        <span>Текст статьи (можно использовать ## для подзаголовков)</span>
+        <textarea data-field="body" rows="12" required></textarea>
+      </label>
+      <label class="field"><span>Текст призыва в конце статьи</span><input data-field="ctaText" placeholder="Хотите обсудить тему на сессии?"></label>
+    </article>
+  </template>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

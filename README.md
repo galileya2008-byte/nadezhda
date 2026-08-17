@@ -30,14 +30,24 @@ py -m http.server 8765
 | Практика | `practice/index.html` |
 | Статьи | `blog/index.html` |
 
-## Новая статья
+## Админка (для Нади)
 
-1. Запись в `data/articles.json`
-2. Копия `blog/_SHABLON-stati.html` → `blog/ваш-slug.html`, правка текста и meta
+**Адрес:** https://galileya2008-byte.github.io/nadezhda/admin/
 
-## Новая мастерская
+1. Откройте админку в браузере.
+2. Создайте [GitHub-токен](https://github.com/settings/tokens/new?description=Nadya+site+admin&scopes=repo) с доступом **repo** (или только к репозиторию `nadezhda`).
+3. Вставьте токен и нажмите «Войти» — загрузятся текущие мастерские и статьи.
+4. Вкладка **Мастерские** — добавление и редактирование расписания.
+5. Вкладка **Статьи** — заголовок, описание, текст (можно с `##` для подзаголовков).
+6. Нажмите «Сохранить» — изменения уйдут на GitHub, сайт обновится через 1–2 минуты.
 
-Добавьте объект в `data/workshops.json` (поля: title, excerpt, dateLabel, status, price, telegramText).
+Токен хранится только в браузере. Ссылку на админку лучше не публиковать в открытом доступе.
+
+### Вручную (если админка недоступна)
+
+**Статья:** запись в `data/articles.json` + копия `blog/_SHABLON-stati.html` → `blog/ваш-slug.html`.
+
+**Мастерская:** объект в `data/workshops.json`.
 
 ## Контакты
 

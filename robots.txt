@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
 
-Sitemap: https://example.ru/sitemap.xml
+Sitemap: https://galileya2008-byte.github.io/nadezhda/sitemap.xml
