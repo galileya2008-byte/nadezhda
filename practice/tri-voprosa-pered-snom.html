@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>3 вопроса перед сном — интерактивная практика | Надя о балансе</title>
+  <meta name="description" content="Короткая вечерняя практика: три вопроса за 5 минут, чтобы день не уносил вас прочь от себя. Заметки остаются только в вашем браузере.">
+  <link rel="canonical" href="https://example.ru/practice/tri-voprosa-pered-snom.html">
+<link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">К содержанию</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="../index.html">Надя о балансе <span class="logo-mark" aria-hidden="true">🦋</span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Меню</button>
+      <nav id="site-nav" class="site-nav">
+        <a href="../about/index.html">Обо мне</a>
+        <a href="../services/index.html">С чем приходят</a>
+        <a href="../workshops/index.html">Мастерские</a>
+        <a href="index.html" aria-current="page">Практика</a>
+        <a href="../blog/index.html">Статьи</a>
+        <a class="btn btn-sm" href="https://t.me/nadya_rodionova" target="_blank" rel="noopener">Записаться</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="practice-page">
+    <div class="container practice-wrap">
+      <p class="breadcrumb"><a href="../index.html">Главная</a> / Практика</p>
+
+      <div class="practice-card" id="practice-app">
+        <div class="practice-progress" aria-hidden="true">
+          <div class="practice-progress-fill" id="progress-fill"></div>
+        </div>
+        <p class="practice-step-label" id="step-label">Шаг 0 из 3</p>
+
+        <!-- Intro -->
+        <section class="practice-panel is-active" data-panel="intro">
+          <p class="eyebrow">5 минут · вечер</p>
+          <h1 class="practice-title">Три вопроса перед сном</h1>
+          <p class="practice-lead">Короткий ритуал, чтобы день «сложился» — не в отчёт для кого-то, а для связи с собой. Отвечайте про себя: вслух, шёпотом или в поле ниже.</p>
+          <p class="practice-note">Заметки <strong>не отправляются</strong> на сервер — только в вашем браузере (можно скопировать в конце). Это не терапия и не диагностика.</p>
+          <button type="button" class="btn practice-next" data-go="1">Начать</button>
+        </section>
+
+        <!-- Q1 -->
+        <section class="practice-panel" data-panel="1" hidden>
+          <h2 class="practice-q">1. Что сегодня было по-настоящему <em>моим</em>?</h2>
+          <p class="practice-hint">Не «полезным», а вашим: момент тишины, разговор, ощущение в теле. Достаточно одного эпизода.</p>
+          <label class="visually-hidden" for="answer-1">Ответ на первый вопрос</label>
+          <textarea id="answer-1" class="practice-textarea" rows="5" placeholder="Можно одним предложением…"></textarea>
+          <div class="practice-actions">
+            <button type="button" class="btn btn-ghost practice-back" data-go="intro">Назад</button>
+            <button type="button" class="btn practice-next" data-go="2">Дальше</button>
+          </div>
+        </section>
+
+        <!-- Q2 -->
+        <section class="practice-panel" data-panel="2" hidden>
+          <h2 class="practice-q">2. Где я сегодня отдал(а) больше, чем хотел(а)?</h2>
+          <p class="practice-hint">Без самобичевания — как карта: где завтра можно чуть меньше перегибать.</p>
+          <label class="visually-hidden" for="answer-2">Ответ на второй вопрос</label>
+          <textarea id="answer-2" class="practice-textarea" rows="5" placeholder="Ситуация, люди, дела…"></textarea>
+          <div class="practice-actions">
+            <button type="button" class="btn btn-ghost practice-back" data-go="1">Назад</button>
+            <button type="button" class="btn practice-next" data-go="3">Дальше</button>
+          </div>
+        </section>
+
+        <!-- Q3 -->
+        <section class="practice-panel" data-panel="3" hidden>
+          <h2 class="practice-q">3. Чему я говорю «спасибо» перед сном?</h2>
+          <p class="practice-hint">Чашка чая, поддержка человека или просто факт, что день закончился — всё считается.</p>
+          <label class="visually-hidden" for="answer-3">Ответ на третий вопрос</label>
+          <textarea id="answer-3" class="practice-textarea" rows="5" placeholder="За что благодарность сегодня…"></textarea>
+          <div class="practice-actions">
+            <button type="button" class="btn btn-ghost practice-back" data-go="2">Назад</button>
+            <button type="button" class="btn practice-next" data-go="done">Завершить</button>
+          </div>
+        </section>
+
+        <!-- Done -->
+        <section class="practice-panel" data-panel="done" hidden>
+          <p class="eyebrow">Готово на сегодня</p>
+          <h2 class="practice-title practice-title-sm">Ваш вечерний круг</h2>
+          <p class="practice-hint">Ниже — сводка ответов. Сохраните для себя или просто побудьте с ощущением.</p>
+          <pre class="practice-summary" id="summary" aria-live="polite"></pre>
+          <div class="practice-actions practice-actions-wrap">
+            <button type="button" class="btn" id="copy-summary">Скопировать текст</button>
+            <button type="button" class="btn btn-ghost" id="restart">Пройти заново</button>
+          </div>
+          <p class="practice-copy-status" id="copy-status" role="status"></p>
+          <aside class="article-cta practice-final-cta">
+            <p>Хотите больше практик и разборов — в канале или на сессии.</p>
+            <a class="btn" href="https://t.me/nadya_o_balanse" target="_blank" rel="noopener">Telegram-канал</a>
+            <a class="btn btn-ghost" href="https://t.me/nadya_rodionova" target="_blank" rel="noopener">Записаться на сессию</a>
+          </aside>
+          <p class="center" style="margin-top: 1.5rem;"><a class="link-arrow" href="../blog/tri-voprosa-pered-snom.html">Читать статью о практике</a></p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-brand">Надя о балансе 🦋</p>
+      <nav class="footer-nav">
+        <a href="https://t.me/nadya_o_balanse" target="_blank" rel="noopener">Канал</a>
+        <a href="https://t.me/nadya_rodionova" target="_blank" rel="noopener">Запись на сессию</a>
+        <a href="../blog/index.html">Статьи</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/practice-sleep.js"></script>
+</body>
+</html>
