@@ -1,7 +1,7 @@
 (function () {
   var REPO = "galileya2008-byte/nadezhda";
   var BRANCH = "main";
-  var SITE_BASE = "https://galileya2008-byte.github.io/nadezhda";
+  var SITE_BASE = "https://nadyarodionova.ru";
   var TOKEN_KEY = "nadya_admin_github_token";
 
   var state = {
@@ -459,6 +459,7 @@
       '<!DOCTYPE html>\n<html lang="ru">\n<head>\n' +
       '  <meta charset="UTF-8">\n' +
       '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <meta name="yandex-verification" content="7c4ee8d470948ff7">\n' +
       "  <title>" +
       escapeHtml(article.title) +
       " — Надя о балансе</title>\n" +

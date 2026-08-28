@@ -6,8 +6,7 @@
 
 1. Создайте репозиторий и загрузите файлы в **корень** (ветка `main`).
 2. **Settings → Pages → Source:** branch `main`, folder `/ (root)`.
-3. Сайт: `https://ВАШ-ЛОГИН.github.io/ИМЯ-РЕПО/`
-4. Перед публикацией замените `example.ru` в `sitemap.xml`, `robots.txt` и `canonical` на страницах.
+3. Сайт: https://nadyarodionova.ru/
 
 Файл `.nojekyll` нужен, чтобы GitHub не скрывал `blog/_SHABLON-stati.html`.
 
@@ -32,7 +31,7 @@ py -m http.server 8765
 
 ## Админка (для Нади)
 
-**Адрес:** https://galileya2008-byte.github.io/nadezhda/admin/
+**Адрес:** https://nadyarodionova.ru/admin/
 
 1. Откройте админку в браузере.
 2. Создайте [GitHub-токен](https://github.com/settings/tokens/new?description=Nadya+site+admin&scopes=repo) с доступом **repo** (или только к репозиторию `nadezhda`).
