@@ -540,8 +540,9 @@
       '      <nav class="footer-nav">\n' +
       '        <a href="https://t.me/nadya_o_balanse" target="_blank" rel="noopener">Канал</a>\n' +
       '        <a href="https://t.me/nadya_rodionova" target="_blank" rel="noopener">Запись на сессию</a>\n' +
-      '        <a href="index.html">Статьи</a>\n' +
+        '        <a href="index.html">Статьи</a>\n' +
       "      </nav>\n" +
+      '      <p class="footer-note">Родионова Надежда Владимировна<br>ИНН 771671582715</p>\n' +
       "    </div>\n" +
       "  </footer>\n" +
       '  <script src="../js/main.js"></script>\n' +
