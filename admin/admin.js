@@ -292,6 +292,7 @@
       status: "open",
       spots: "набор открыт",
       price: "уточняется при записи",
+      page: "",
       telegramText: "Здравствуйте! Хочу записаться на мастерскую «…».",
     });
     renderWorkshops();
