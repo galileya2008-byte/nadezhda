@@ -1,3 +1,11 @@
+User-agent: Yandex
+Allow: /
+Disallow:
+
+User-agent: YandexBot
+Allow: /
+Disallow:
+
 User-agent: *
 Allow: /
 Disallow: /admin/

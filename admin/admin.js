@@ -461,6 +461,9 @@
       '  <meta charset="UTF-8">\n' +
       '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
       '  <meta name="yandex-verification" content="7c4ee8d470948ff7">\n' +
+      '  <link rel="icon" href="/favicon.svg" type="image/svg+xml">\n' +
+      '  <link rel="icon" href="/favicon.ico" sizes="any">\n' +
+      '  <link rel="apple-touch-icon" href="/apple-touch-icon.png">\n' +
       "  <title>" +
       escapeHtml(article.title) +
       " — Надя о балансе</title>\n" +
