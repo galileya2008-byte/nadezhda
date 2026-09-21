@@ -1,7 +1,7 @@
 (function () {
   var REPO = "galileya2008-byte/nadezhda";
   var BRANCH = "main";
-  var SITE_BASE = "https://galileya2008-byte.github.io/nadezhda";
+  var SITE_BASE = "https://nadyarodionova.ru";
   var TOKEN_KEY = "nadya_admin_github_token";
 
   var state = {
@@ -394,6 +394,7 @@
       status: "open",
       spots: "набор открыт",
       price: "уточняется при записи",
+      page: "",
       telegramText: "Здравствуйте! Хочу записаться на мастерскую «…».",
     });
     renderWorkshops();
@@ -565,6 +566,7 @@
       { loc: SITE_BASE + "/about/", changefreq: "monthly", priority: "0.9" },
       { loc: SITE_BASE + "/services/", changefreq: "monthly", priority: "0.9" },
       { loc: SITE_BASE + "/workshops/", changefreq: "weekly", priority: "0.95" },
+      { loc: SITE_BASE + "/workshops/kontakt-s-rodom.html", changefreq: "weekly", priority: "0.95" },
       { loc: SITE_BASE + "/practice/", changefreq: "monthly", priority: "0.85" },
       { loc: SITE_BASE + "/blog/", changefreq: "weekly", priority: "0.9" },
       { loc: SITE_BASE + "/practice/tri-voprosa-pered-snom.html", changefreq: "monthly", priority: "0.85" },
@@ -669,7 +671,7 @@
     zip.file("rss.xml", buildRssXml(state.articles));
     zip.file(
       "KAK-OPLIKOVAT.txt",
-      "1. Распакуйте архив.\n2. Загрузите файлы в репозиторий nadezhda (ветка main), сохраняя пути.\n3. В Яндекс.Вебмастере: Индексирование → Переобход страниц → добавьте URL новой статьи и sitemap.xml.\n4. Sitemap: https://galileya2008-byte.github.io/nadezhda/sitemap.xml\n"
+      "1. Распакуйте архив.\n2. Загрузите файлы в репозиторий nadezhda (ветка main), сохраняя пути.\n3. В Яндекс.Вебмастере: Индексирование → Переобход страниц → URL новой статьи.\n4. Sitemap: https://nadyarodionova.ru/sitemap.xml\n"
     );
     state.articles.forEach(function (a) {
       var meta = state.articleBodies[a.slug];
@@ -757,6 +759,10 @@
       '<!DOCTYPE html>\n<html lang="ru">\n<head>\n' +
       '  <meta charset="UTF-8">\n' +
       '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <meta name="yandex-verification" content="7c4ee8d470948ff7">\n' +
+      '  <link rel="icon" href="/favicon.svg" type="image/svg+xml">\n' +
+      '  <link rel="icon" href="/favicon.ico" sizes="any">\n' +
+      '  <link rel="apple-touch-icon" href="/apple-touch-icon.png">\n' +
       "  <title>" +
       escapeHtml(article.title) +
       " — Надя о балансе</title>\n" +
@@ -860,11 +866,25 @@
       '      <nav class="footer-nav">\n' +
       '        <a href="https://t.me/nadya_o_balanse" target="_blank" rel="noopener">Канал</a>\n' +
       '        <a href="https://t.me/nadya_rodionova" target="_blank" rel="noopener">Запись на сессию</a>\n' +
-      '        <a href="index.html">Статьи</a>\n' +
+        '        <a href="index.html">Статьи</a>\n' +
       "      </nav>\n" +
+      '      <p class="footer-note">Родионова Надежда Владимировна<br>ИНН 771671582715</p>\n' +
       "    </div>\n" +
       "  </footer>\n" +
       '  <script src="../js/main.js"></script>\n' +
+      '<!-- Yandex.Metrika counter -->\n' +
+      '<script type="text/javascript">\n' +
+      "    (function(m,e,t,r,i,k,a){\n" +
+      "        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};\n" +
+      "        m[i].l=1*new Date();\n" +
+      "        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}\n" +
+      "        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)\n" +
+      "    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=112670594', 'ym');\n" +
+      "\n" +
+      '    ym(112670594, \'init\', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});\n' +
+      "</script>\n" +
+      '<noscript><div><img src="https://mc.yandex.ru/watch/112670594" style="position:absolute; left:-9999px;" alt="" /></div></noscript>\n' +
+      "<!-- /Yandex.Metrika counter -->\n" +
       "</body>\n</html>\n"
     );
   }

@@ -717,9 +717,10 @@ a:hover {
 
 .footer-note {
   width: 100%;
-  margin: 1rem 0 0;
-  font-size: 0.8rem;
-  opacity: 0.6;
+  margin: 1.15rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  opacity: 0.65;
 }
 
 /* Blog layout */
@@ -1307,6 +1308,238 @@ a:hover {
 
 .workshop-note p:last-child {
   margin-bottom: 0;
+}
+
+.workshop-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.workshop-title-link:hover {
+  color: var(--accent-dark);
+}
+
+.workshop-card--has-page {
+  cursor: pointer;
+}
+
+.workshop-detail-hero {
+  padding: 2.25rem 0 2.5rem;
+  background:
+    radial-gradient(ellipse 70% 80% at 10% 0%, var(--blue-soft), transparent 55%),
+    radial-gradient(ellipse 50% 60% at 100% 20%, var(--gold-soft), transparent 50%),
+    var(--bg);
+}
+
+.workshop-detail-hero-inner {
+  max-width: 760px;
+}
+
+.workshop-detail-hero h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: 1.15;
+  margin: 0 0 1rem;
+}
+
+.workshop-detail-lead {
+  font-size: 1.12rem;
+  color: var(--text-muted);
+  margin: 0 0 1.5rem;
+  max-width: 38em;
+}
+
+.workshop-facts {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.workshop-facts li {
+  color: var(--text-muted);
+  font-size: 0.98rem;
+}
+
+.workshop-facts strong {
+  display: inline-block;
+  min-width: 5.2rem;
+  color: var(--text);
+  margin-right: 0.35rem;
+}
+
+.workshop-detail-body {
+  max-width: 760px;
+  padding-bottom: 4rem;
+}
+
+.workshop-block {
+  margin: 2.75rem 0;
+}
+
+.workshop-block h2 {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  margin: 0 0 0.85rem;
+}
+
+.workshop-aside {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.workshop-outcomes,
+.workshop-includes {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.workshop-outcomes li,
+.workshop-includes li {
+  position: relative;
+  padding: 0.85rem 1rem 0.85rem 2.4rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text-muted);
+}
+
+.workshop-outcomes li::before {
+  content: "✦";
+  position: absolute;
+  left: 0.9rem;
+  top: 0.85rem;
+  color: var(--gold-dark);
+}
+
+.workshop-includes li::before {
+  content: "✓";
+  position: absolute;
+  left: 0.9rem;
+  top: 0.85rem;
+  color: var(--accent-dark);
+  font-weight: 700;
+}
+
+.workshop-program-meta {
+  color: var(--text-muted);
+  margin: 0 0 1.25rem;
+}
+
+.workshop-modules {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.workshop-modules li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: start;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.2rem;
+}
+
+.workshop-module-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.workshop-modules h3 {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  margin: 0.15rem 0 0.35rem;
+}
+
+.workshop-modules p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.workshop-tariffs {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 720px) {
+  .workshop-tariffs {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+}
+
+.workshop-tariff {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.45rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.workshop-tariff .btn {
+  margin-top: auto;
+}
+
+.workshop-tariff--vip {
+  border-color: rgba(201, 168, 76, 0.45);
+  background:
+    linear-gradient(180deg, rgba(201, 168, 76, 0.12), transparent 42%),
+    var(--surface);
+}
+
+.workshop-tariff-name {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  color: var(--accent-dark);
+}
+
+.workshop-tariff--vip .workshop-tariff-name {
+  color: var(--gold-dark);
+}
+
+.workshop-tariff-price {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 2.1rem;
+  line-height: 1;
+}
+
+.workshop-tariff p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.workshop-invite {
+  text-align: center;
+}
+
+.workshop-invite p {
+  color: var(--text-muted);
+  max-width: 38em;
+  margin-inline: auto;
 }
 
 .card-link .btn {

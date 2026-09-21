@@ -2,28 +2,28 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Надя о балансе — статьи</title>
-    <link>https://galileya2008-byte.github.io/nadezhda/blog/</link>
+    <link>https://nadyarodionova.ru/blog/</link>
     <description>Статьи о балансе, практиках, отношениях и заботе о себе. Надежда Родионова.</description>
     <language>ru</language>
-    <atom:link href="https://galileya2008-byte.github.io/nadezhda/rss.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="https://nadyarodionova.ru/rss.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Как вернуть баланс после выгорания: с чего начать</title>
-      <link>https://galileya2008-byte.github.io/nadezhda/blog/kak-vernut-balans-posle-vygoraniya.html</link>
-      <guid isPermaLink="true">https://galileya2008-byte.github.io/nadezhda/blog/kak-vernut-balans-posle-vygoraniya.html</guid>
+      <link>https://nadyarodionova.ru/blog/kak-vernut-balans-posle-vygoraniya.html</link>
+      <guid isPermaLink="true">https://nadyarodionova.ru/blog/kak-vernut-balans-posle-vygoraniya.html</guid>
       <pubDate>Sat, 01 Mar 2026 12:00:00 +0300</pubDate>
       <description>Выгорание — не лень и не слабость. Разбираем первые шаги: от признания усталости до маленьких опор в everyday life.</description>
     </item>
     <item>
       <title>Границы без чувства вины: мягкая практика «нет»</title>
-      <link>https://galileya2008-byte.github.io/nadezhda/blog/granitsy-bez-chuvstva-viny.html</link>
-      <guid isPermaLink="true">https://galileya2008-byte.github.io/nadezhda/blog/granitsy-bez-chuvstva-viny.html</guid>
+      <link>https://nadyarodionova.ru/blog/granitsy-bez-chuvstva-viny.html</link>
+      <guid isPermaLink="true">https://nadyarodionova.ru/blog/granitsy-bez-chuvstva-viny.html</guid>
       <pubDate>Thu, 12 Feb 2026 12:00:00 +0300</pubDate>
       <description>Почему «нет» кажется предательством и как учиться защищать своё время, не разрушая отношения.</description>
     </item>
     <item>
       <title>Три вопроса перед сном, чтобы день не уносил вас прочь</title>
-      <link>https://galileya2008-byte.github.io/nadezhda/blog/tri-voprosa-pered-snom.html</link>
-      <guid isPermaLink="true">https://galileya2008-byte.github.io/nadezhda/blog/tri-voprosa-pered-snom.html</guid>
+      <link>https://nadyarodionova.ru/blog/tri-voprosa-pered-snom.html</link>
+      <guid isPermaLink="true">https://nadyarodionova.ru/blog/tri-voprosa-pered-snom.html</guid>
       <pubDate>Tue, 20 Jan 2026 12:00:00 +0300</pubDate>
       <description>Короткий ритуал из коучинговой практики — вернуть внимание к себе за пять минут.</description>
     </item>

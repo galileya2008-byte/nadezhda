@@ -2,11 +2,11 @@
 
 Статический сайт [Надежды Родионовой](https://t.me/nadya_rodionova): главная, обо мне, мастерские, практики, статьи.
 
-**Сайт:** https://galileya2008-byte.github.io/nadezhda/
+**Сайт:** https://nadyarodionova.ru/
 
 ## Админка
 
-**Адрес:** https://galileya2008-byte.github.io/nadezhda/admin/
+**Адрес:** https://nadyarodionova.ru/admin/
 
 ### Для Нади (без GitHub)
 
@@ -17,14 +17,14 @@
 
 ### Для публикации на GitHub
 
-1. **«Публикую на сайт»** → [GitHub-токен](https://github.com/settings/tokens/new?description=Nadya+site+admin&scopes=repo) с доступом **repo**.
+1. **«Публикую на сайт»** → [GitHub-токен](https://github.com/settings/tokens/new?description=Nadya+site+admin&scopes=repo) с доступом **repo** (репозиторий `nadezhda`).
 2. Сохранение статей сразу обновляет сайт и файлы для **Яндекса** (sitemap + RSS).
 
 Подробно про индексацию: [docs/YANDEX-INDEX.md](docs/YANDEX-INDEX.md)
 
 ## GitHub Pages
 
-Ветка `main`, корень репозитория. Файл `.nojekyll` нужен для шаблона в `blog/`.
+Ветка `main`, корень репозитория. Домен: **nadyarodionova.ru**. Файл `.nojekyll` нужен для шаблона в `blog/`.
 
 ## Локальный просмотр
 

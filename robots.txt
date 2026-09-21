@@ -1,5 +1,13 @@
+User-agent: Yandex
+Allow: /
+Disallow:
+
+User-agent: YandexBot
+Allow: /
+Disallow:
+
 User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://galileya2008-byte.github.io/nadezhda/sitemap.xml
+Sitemap: https://nadyarodionova.ru/sitemap.xml

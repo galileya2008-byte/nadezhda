@@ -13,6 +13,13 @@
     );
   }
 
+  function workshopPageHref(page) {
+    if (!page) return "";
+    var path = window.location.pathname.replace(/\\/g, "/");
+    if (path.indexOf("/workshops/") !== -1) return page;
+    return "workshops/" + page;
+  }
+
   function resolveWorkshopsUrl() {
     var path = window.location.pathname.replace(/\\/g, "/");
     if (path.indexOf("/workshops/") !== -1 || path.indexOf("/blog/") !== -1 || path.indexOf("/practice/") !== -1 || path.indexOf("/about/") !== -1 || path.indexOf("/services/") !== -1) {
@@ -28,31 +35,47 @@
     var btnClass = isOpen ? "btn" : "btn btn-ghost";
     var btnText = isOpen ? "Записаться" : "Узнать";
     var href = telegramUrl(w.telegramText);
+    var page = w.page ? String(w.page).trim() : "";
+    var pageHref = workshopPageHref(page);
     var title = (w.emoji ? w.emoji + " " : "") + w.title;
+    var titleHtml = pageHref
+      ? '<a class="workshop-title-link" href="' + escapeHtml(pageHref) + '">' + escapeHtml(title) + "</a>"
+      : escapeHtml(title);
     var durationLine = w.duration ? w.duration : w.format;
+    var cardClass = "workshop-card" + (compact ? " workshop-card--compact" : "") + (pageHref ? " workshop-card--has-page" : "");
+    var dataHref = pageHref ? ' data-page="' + escapeHtml(pageHref) + '"' : "";
 
     if (compact) {
+      var compactBtn = pageHref
+        ? '<a class="btn" href="' + escapeHtml(pageHref) + '">Подробнее</a>'
+        : '<a class="' + btnClass + '" href="' + escapeHtml(href) + '" target="_blank" rel="noopener">' + btnText + "</a>";
       return (
-        '<li class="workshop-card workshop-card--compact">' +
+        "<li class=\"" + cardClass + "\"" + dataHref + ">" +
         '<div class="workshop-card-head">' +
         '<span class="workshop-status ' + statusClass + '">' + statusText + "</span>" +
-        "<h3>" + escapeHtml(title) + "</h3>" +
+        "<h3>" + titleHtml + "</h3>" +
         "</div>" +
         '<p class="workshop-excerpt">' + escapeHtml(w.excerpt) + "</p>" +
         '<ul class="workshop-meta">' +
         "<li><strong>" + escapeHtml(w.dateLabel) + "</strong></li>" +
         "<li>" + escapeHtml(durationLine) + "</li>" +
         "</ul>" +
-        '<a class="' + btnClass + '" href="' + escapeHtml(href) + '" target="_blank" rel="noopener">' + btnText + "</a>" +
+        compactBtn +
         "</li>"
       );
     }
 
+    var actions = pageHref
+      ? '<a class="btn" href="' + escapeHtml(pageHref) + '">Подробнее</a>' +
+        '<a class="' + btnClass + '" href="' + escapeHtml(href) + '" target="_blank" rel="noopener">' + btnText + "</a>"
+      : '<a class="' + btnClass + '" href="' + escapeHtml(href) + '" target="_blank" rel="noopener">' + btnText + "</a>" +
+        '<a class="btn btn-ghost" href="https://t.me/nadya_rodionova" target="_blank" rel="noopener">Задать вопрос</a>';
+
     return (
-      '<li class="workshop-card">' +
+      "<li class=\"" + cardClass + "\"" + dataHref + ">" +
       '<div class="workshop-card-head">' +
       '<span class="workshop-status ' + statusClass + '">' + statusText + "</span>" +
-      "<h3>" + escapeHtml(title) + "</h3>" +
+      "<h3>" + titleHtml + "</h3>" +
       "</div>" +
       '<p class="workshop-excerpt">' + escapeHtml(w.excerpt) + "</p>" +
       '<ul class="workshop-meta">' +
@@ -62,8 +85,7 @@
       (w.price ? "<li><strong>Участие:</strong> " + escapeHtml(w.price) + "</li>" : "") +
       "</ul>" +
       '<div class="workshop-actions">' +
-      '<a class="' + btnClass + '" href="' + escapeHtml(href) + '" target="_blank" rel="noopener">' + btnText + "</a>" +
-      '<a class="btn btn-ghost" href="https://t.me/nadya_rodionova" target="_blank" rel="noopener">Задать вопрос</a>' +
+      actions +
       "</div>" +
       "</li>"
     );
@@ -88,6 +110,7 @@
           listEl.innerHTML = items.length
             ? items.map(function (w) { return renderWorkshopCard(w, false); }).join("")
             : "<li><p>Пока нет запланированных мастерских.</p></li>";
+          bindWorkshopCardClicks(listEl);
           var noteEl = document.getElementById("workshops-schedule-note");
           if (noteEl && data.scheduleNote) {
             noteEl.innerHTML = "<em>" + escapeHtml(data.scheduleNote) + "</em>";
@@ -98,12 +121,22 @@
           homeEl.innerHTML = preview.length
             ? preview.map(function (w) { return renderWorkshopCard(w, true); }).join("")
             : "";
+          bindWorkshopCardClicks(homeEl);
         }
       })
       .catch(function () {
         var msg = "<li><p>Не удалось загрузить мастерские. Откройте сайт через локальный сервер или проверьте data/workshops.json.</p></li>";
         if (listEl) listEl.innerHTML = msg;
       });
+  }
+
+  function bindWorkshopCardClicks(root) {
+    root.querySelectorAll("[data-page]").forEach(function (card) {
+      card.addEventListener("click", function (e) {
+        if (e.target.closest("a")) return;
+        window.location.href = card.getAttribute("data-page");
+      });
+    });
   }
 
   loadWorkshops();

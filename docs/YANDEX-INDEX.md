@@ -1,43 +1,39 @@
 # Индексация статей в Яндексе
 
-Сайт: https://galileya2008-byte.github.io/nadezhda/
+Сайт: https://nadyarodionova.ru/
 
 ## Один раз: подключить сайт
 
-1. [Яндекс.Вебмастер](https://webmaster.yandex.ru/) → **Добавить сайт** → укажите URL сайта.
-2. Подтвердите права (мета-тег в `index.html` или файл `yandex_XXXX.html` в корне репозитория).
-3. **Индексирование → Файлы Sitemap** → добавьте:
+1. [Яндекс.Вебмастер](https://webmaster.yandex.ru/) → **Добавить сайт** → `https://nadyarodionova.ru/`
+2. Подтвердите права (мета-тег уже есть на странице «Статьи», при необходимости добавьте на главную).
+3. **Индексирование → Файлы Sitemap**:
    ```
-   https://galileya2008-byte.github.io/nadezhda/sitemap.xml
+   https://nadyarodionova.ru/sitemap.xml
    ```
-4. **Индексирование → RSS-каналы** (необязательно, но полезно):
+4. **Индексирование → RSS-каналы** (рекомендуется):
    ```
-   https://galileya2008-byte.github.io/nadezhda/rss.xml
+   https://nadyarodionova.ru/rss.xml
    ```
 
 ## После каждой новой статьи
 
 Админка при публикации обновляет:
 
-- `blog/ваш-slug.html` — страница с title, description, canonical, Open Graph, разметкой Article
+- `blog/ваш-slug.html` — title, description, canonical, Open Graph, JSON-LD Article
 - `data/articles.json` — список на сайте
-- `sitemap.xml` — URL статьи с датой `lastmod`
-- `rss.xml` — лента для поисковиков
+- `sitemap.xml` — URL статьи с `lastmod`
+- `rss.xml` — лента
 
-**Дополнительно в Вебмастере (ускоряет появление в поиске):**
+**Ускорить появление в поиске:**
 
 1. **Индексирование → Переобход страниц**
-2. Добавьте URL новой статьи, например:
-   `https://galileya2008-byte.github.io/nadezhda/blog/moya-statya.html`
-3. Можно отправить и sitemap ещё раз, если прошло много времени.
-
-Обычно страница попадает в индекс от нескольких дней до 2–3 недель; переобход часто ускоряет процесс.
+2. URL новой статьи, например: `https://nadyarodionova.ru/blog/moya-statya.html`
 
 ## Проверка
 
-- В Вебmaster: **Поисковые запросы / Страницы в поиске**
-- В браузере: `site:galileya2008-byte.github.io/nadezhda` в Яндексе
+- Яндекс.Вебmaster → страницы в поиске
+- Запрос: `site:nadyarodionova.ru`
 
 ## robots.txt
 
-Файл `robots.txt` уже указывает на sitemap. Админка (`/admin/`) закрыта от индексации.
+Sitemap указан для всех роботов; для Yandex и YandexBot — полный доступ. Админка `/admin/` закрыта от индексации.

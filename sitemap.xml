@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://galileya2008-byte.github.io/nadezhda/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://galileya2008-byte.github.io/nadezhda/about/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://galileya2008-byte.github.io/nadezhda/services/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://galileya2008-byte.github.io/nadezhda/workshops/</loc><changefreq>weekly</changefreq><priority>0.95</priority></url>
-  <url><loc>https://galileya2008-byte.github.io/nadezhda/practice/</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://galileya2008-byte.github.io/nadezhda/blog/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://galileya2008-byte.github.io/nadezhda/blog/kak-vernut-balans-posle-vygoraniya.html</loc><lastmod>2026-03-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://galileya2008-byte.github.io/nadezhda/blog/granitsy-bez-chuvstva-viny.html</loc><lastmod>2026-02-12</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://galileya2008-byte.github.io/nadezhda/blog/tri-voprosa-pered-snom.html</loc><lastmod>2026-01-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://galileya2008-byte.github.io/nadezhda/practice/tri-voprosa-pered-snom.html</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://nadyarodionova.ru/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://nadyarodionova.ru/about/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://nadyarodionova.ru/services/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://nadyarodionova.ru/workshops/</loc><changefreq>weekly</changefreq><priority>0.95</priority></url>
+  <url><loc>https://nadyarodionova.ru/workshops/kontakt-s-rodom.html</loc><changefreq>weekly</changefreq><priority>0.95</priority></url>
+  <url><loc>https://nadyarodionova.ru/practice/</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://nadyarodionova.ru/blog/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://nadyarodionova.ru/blog/kak-vernut-balans-posle-vygoraniya.html</loc><lastmod>2026-03-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://nadyarodionova.ru/blog/granitsy-bez-chuvstva-viny.html</loc><lastmod>2026-02-12</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://nadyarodionova.ru/blog/tri-voprosa-pered-snom.html</loc><lastmod>2026-01-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://nadyarodionova.ru/practice/tri-voprosa-pered-snom.html</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
 </urlset>
