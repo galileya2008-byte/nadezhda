@@ -12,11 +12,23 @@
     sitemapSha: null,
     rssSha: null,
     articleHtmlShas: {},
+    workshopPageShas: {},
     scheduleNote: "",
     workshops: [],
     articles: [],
     articleBodies: {},
   };
+
+  var YANDEX_METRIKA =
+    "<!-- Yandex.Metrika counter -->\n<script type=\"text/javascript\">\n" +
+    "    (function(m,e,t,r,i,k,a){\n" +
+    "        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};\n" +
+    "        m[i].l=1*new Date();\n" +
+    "        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}\n" +
+    "        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)\n" +
+    "    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=112670594', 'ym');\n" +
+    "    ym(112670594, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:\"dataLayer\", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});\n" +
+    "</script>\n<noscript><div><img src=\"https://mc.yandex.ru/watch/112670594\" style=\"position:absolute; left:-9999px;\" alt=\"\" /></div></noscript>\n<!-- /Yandex.Metrika counter -->";
 
   var loginPanel = document.getElementById("login-panel");
   var app = document.getElementById("app");
@@ -235,7 +247,21 @@
       state.scheduleNote = data.scheduleNote || "";
       state.workshops = data.workshops || [];
       document.getElementById("schedule-note").value = state.scheduleNote;
+      return loadWorkshopPageShas();
     });
+  }
+
+  function loadWorkshopPageShas() {
+    state.workshopPageShas = {};
+    var loads = (state.workshops || []).map(function (w) {
+      if (!w.slug) return Promise.resolve();
+      return githubFetch("workshops/" + w.slug + ".html")
+        .then(function (file) {
+          state.workshopPageShas[w.slug] = file.sha;
+        })
+        .catch(function () {});
+    });
+    return Promise.all(loads);
   }
 
   function loadArticlesData() {
@@ -339,6 +365,14 @@
         node.querySelector(".card-title").textContent = input.value || "Новая мастерская";
       });
     });
+    node.querySelectorAll("input[data-field='slug']").forEach(function (input) {
+      input.addEventListener("input", function () {
+        var preview = node.querySelector("[data-slug-preview]");
+        if (preview) preview.textContent = input.value.trim() || "slug";
+      });
+    });
+    var slugPreview = node.querySelector("[data-slug-preview]");
+    if (slugPreview && data.slug) slugPreview.textContent = data.slug;
     return node;
   }
 
@@ -365,7 +399,10 @@
   function fillFields(node, data) {
     node.querySelectorAll("[data-field]").forEach(function (el) {
       var key = el.getAttribute("data-field");
-      if (data[key] !== undefined && data[key] !== null) {
+      if (data[key] === undefined || data[key] === null) return;
+      if (el.type === "checkbox") {
+        el.checked = !!data[key];
+      } else {
         el.value = data[key];
       }
     });
@@ -374,7 +411,12 @@
   function readFields(node) {
     var obj = {};
     node.querySelectorAll("[data-field]").forEach(function (el) {
-      obj[el.getAttribute("data-field")] = el.value.trim();
+      var key = el.getAttribute("data-field");
+      if (el.type === "checkbox") {
+        obj[key] = el.checked;
+      } else {
+        obj[key] = el.value.trim();
+      }
     });
     return obj;
   }
@@ -394,7 +436,15 @@
       status: "open",
       spots: "набор открыт",
       price: "уточняется при записи",
-      page: "",
+      landingManual: false,
+      landingH1: "",
+      landingEyebrow: "",
+      landingLead: "",
+      landingOutcomes: "",
+      landingProgram: "",
+      landingIncludes: "",
+      landingInvite: "",
+      endDate: "",
       telegramText: "Здравствуйте! Хочу записаться на мастерскую «…».",
     });
     renderWorkshops();
@@ -402,10 +452,45 @@
 
   function onSaveWorkshopsClick() {
     if (state.mode === "editor") {
-      exportWorkshopsJson();
+      exportWorkshopsBundle();
     } else {
       saveWorkshops();
     }
+  }
+
+  function normalizeWorkshop(w) {
+    if (w.slug) {
+      w.page = w.slug + ".html";
+    }
+    return w;
+  }
+
+  function normalizeWorkshopsList(list) {
+    return (list || []).map(function (w) {
+      return normalizeWorkshop(Object.assign({}, w));
+    });
+  }
+
+  function linesFromTextarea(text) {
+    return String(text || "")
+      .split("\n")
+      .map(function (line) {
+        return line.trim();
+      })
+      .filter(Boolean);
+  }
+
+  function workshopLandingFiles(workshops) {
+    var files = [];
+    normalizeWorkshopsList(workshops).forEach(function (w) {
+      if (!w.slug || w.landingManual) return;
+      files.push({
+        path: "workshops/" + w.slug + ".html",
+        content: buildWorkshopLandingHtml(w),
+        slug: w.slug,
+      });
+    });
+    return files;
   }
 
   function addArticle() {
@@ -467,16 +552,50 @@
       return;
     }
 
+    var normalized = normalizeWorkshopsList(state.workshops);
     var payload = {
       scheduleNote: state.scheduleNote || "Даты мастерских могут незначительно сдвигаться.",
-      workshops: state.workshops,
+      workshops: normalized,
     };
     var content = JSON.stringify(payload, null, 2) + "\n";
+    var saves = [
+      putFile("data/workshops.json", content, state.workshopsSha, "Обновить мастерские через админку"),
+    ];
+    workshopLandingFiles(normalized).forEach(function (file) {
+      saves.push(
+        putFile(
+          file.path,
+          file.content,
+          state.workshopPageShas[file.slug] || null,
+          "Лендинг мастерской: " + file.slug
+        )
+      );
+    });
+    saves.push(
+      putFile(
+        "sitemap.xml",
+        buildSitemapXml(state.articles, normalized),
+        state.sitemapSha,
+        "Обновить sitemap (мастерские)"
+      )
+    );
 
-    putFile("data/workshops.json", content, state.workshopsSha, "Обновить мастерские через админку")
-      .then(function (res) {
-        state.workshopsSha = res.content.sha;
-        setStatus(workshopsStatus, "Мастерские сохранены. Сайт обновится через 1–2 минуты.", "ok");
+    Promise.all(saves)
+      .then(function (results) {
+        state.workshopsSha = results[0].content.sha;
+        var landingFiles = workshopLandingFiles(normalized);
+        landingFiles.forEach(function (file, i) {
+          state.workshopPageShas[file.slug] = results[i + 1].content.sha;
+        });
+        state.sitemapSha = results[results.length - 1].content.sha;
+        var landingCount = landingFiles.length;
+        setStatus(
+          workshopsStatus,
+          "Мастерские сохранены" +
+            (landingCount ? ", обновлено лендингов: " + landingCount : "") +
+            ". Sitemap обновлён. Сайт обновится через 1–2 минуты.",
+          "ok"
+        );
       })
       .catch(function (err) {
         setStatus(workshopsStatus, err.message, "error");
@@ -518,7 +637,7 @@
       );
     });
 
-    var sitemapContent = buildSitemapXml(state.articles);
+    var sitemapContent = buildSitemapXml(state.articles, state.workshops);
     var rssContent = buildRssXml(state.articles);
     saves.push(
       putFile("sitemap.xml", sitemapContent, state.sitemapSha, "Обновить sitemap для поисковиков"),
@@ -548,7 +667,7 @@
     collectWorkshopsFromDom();
     return {
       scheduleNote: state.scheduleNote || "Даты мастерских могут незначительно сдвигаться.",
-      workshops: state.workshops,
+      workshops: normalizeWorkshopsList(state.workshops),
     };
   }
 
@@ -557,7 +676,7 @@
     return { articles: state.articles };
   }
 
-  function buildSitemapXml(articles) {
+  function buildSitemapXml(articles, workshops) {
     var sorted = (articles || []).slice().sort(function (a, b) {
       return b.date.localeCompare(a.date);
     });
@@ -566,17 +685,36 @@
       { loc: SITE_BASE + "/about/", changefreq: "monthly", priority: "0.9" },
       { loc: SITE_BASE + "/services/", changefreq: "monthly", priority: "0.9" },
       { loc: SITE_BASE + "/workshops/", changefreq: "weekly", priority: "0.95" },
-      { loc: SITE_BASE + "/workshops/kontakt-s-rodom.html", changefreq: "weekly", priority: "0.95" },
       { loc: SITE_BASE + "/practice/", changefreq: "monthly", priority: "0.85" },
       { loc: SITE_BASE + "/blog/", changefreq: "weekly", priority: "0.9" },
       { loc: SITE_BASE + "/practice/tri-voprosa-pered-snom.html", changefreq: "monthly", priority: "0.85" },
     ];
+    normalizeWorkshopsList(workshops || []).forEach(function (w) {
+      if (!w.slug) return;
+      staticUrls.push({
+        loc: SITE_BASE + "/workshops/" + (w.page || w.slug + ".html"),
+        changefreq: "weekly",
+        priority: "0.95",
+        lastmod: w.date,
+      });
+    });
     var lines = [
       '<?xml version="1.0" encoding="UTF-8"?>',
       '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ];
     staticUrls.forEach(function (u) {
-      lines.push("  <url><loc>" + escapeXml(u.loc) + "</loc><changefreq>" + u.changefreq + "</changefreq><priority>" + u.priority + "</priority></url>");
+      var lastmod = u.lastmod ? "<lastmod>" + escapeXml(u.lastmod) + "</lastmod>" : "";
+      lines.push(
+        "  <url><loc>" +
+          escapeXml(u.loc) +
+          "</loc>" +
+          lastmod +
+          "<changefreq>" +
+          u.changefreq +
+          "</changefreq><priority>" +
+          u.priority +
+          "</priority></url>"
+      );
     });
     sorted.forEach(function (a) {
       lines.push(
@@ -634,19 +772,38 @@
       .replace(/'/g, "&apos;");
   }
 
-  function exportWorkshopsJson() {
+  function exportWorkshopsBundle() {
     try {
       collectWorkshopsFromDom();
-      state.workshops.forEach(function (w) {
-        validateSlug(w.slug, w.title || "Мастерская");
-      });
+      validateAllWorkshops();
     } catch (err) {
       setStatus(workshopsStatus, err.message, "error");
       return;
     }
-    var content = JSON.stringify(buildWorkshopsPayload(), null, 2) + "\n";
-    downloadBlob("workshops.json", content, "application/json");
-    setStatus(workshopsStatus, "Файл workshops.json скачан. Положите его в data/ на GitHub.", "ok");
+    var normalized = normalizeWorkshopsList(state.workshops);
+    if (!window.JSZip) {
+      var content = JSON.stringify(
+        { scheduleNote: state.scheduleNote, workshops: normalized },
+        null,
+        2
+      ) + "\n";
+      downloadBlob("workshops.json", content, "application/json");
+      setStatus(workshopsStatus, "Скачан workshops.json (JSZip недоступен — без HTML).", "ok");
+      return;
+    }
+    var zip = new window.JSZip();
+    zip.file(
+      "data/workshops.json",
+      JSON.stringify({ scheduleNote: state.scheduleNote, workshops: normalized }, null, 2) + "\n"
+    );
+    workshopLandingFiles(normalized).forEach(function (file) {
+      zip.file(file.path, file.content);
+    });
+    zip.file("sitemap.xml", buildSitemapXml(state.articles, normalized));
+    zip.generateAsync({ type: "blob" }).then(function (blob) {
+      downloadBlob("nadya-workshops-publish.zip", blob, "application/zip");
+      setStatus(workshopsStatus, "Архив с JSON, лендингами и sitemap скачан.", "ok");
+    });
   }
 
   function exportPublicationZip() {
@@ -665,9 +822,13 @@
       return;
     }
     var zip = new window.JSZip();
-    zip.file("data/workshops.json", JSON.stringify(buildWorkshopsPayload(), null, 2) + "\n");
+    var normalizedWorkshops = normalizeWorkshopsList(state.workshops);
+    zip.file(
+      "data/workshops.json",
+      JSON.stringify({ scheduleNote: state.scheduleNote, workshops: normalizedWorkshops }, null, 2) + "\n"
+    );
     zip.file("data/articles.json", JSON.stringify(buildArticlesPayload(), null, 2) + "\n");
-    zip.file("sitemap.xml", buildSitemapXml(state.articles));
+    zip.file("sitemap.xml", buildSitemapXml(state.articles, normalizedWorkshops));
     zip.file("rss.xml", buildRssXml(state.articles));
     zip.file(
       "KAK-OPLIKOVAT.txt",
@@ -676,6 +837,9 @@
     state.articles.forEach(function (a) {
       var meta = state.articleBodies[a.slug];
       zip.file("blog/" + a.slug + ".html", buildArticleHtml(a, meta.body, meta.ctaText));
+    });
+    workshopLandingFiles(normalizedWorkshops).forEach(function (file) {
+      zip.file(file.path, file.content);
     });
     zip.generateAsync({ type: "blob" }).then(function (blob) {
       downloadBlob("nadya-site-publish.zip", blob, "application/zip");
@@ -717,6 +881,202 @@
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
+  }
+
+  function buildWorkshopLandingHtml(w) {
+    var slug = w.slug;
+    var pageUrl = SITE_BASE + "/workshops/" + slug + ".html";
+    var h1 = w.landingH1 || w.title;
+    var shortTitle = h1.length > 42 ? w.title : h1;
+    var breadcrumb = shortTitle.replace(/"/g, "");
+    var eyebrow =
+      w.landingEyebrow ||
+      [w.format, w.duration].filter(Boolean).join(" · ") ||
+      "Онлайн";
+    var lead = w.landingLead || w.excerpt;
+    var outcomes = linesFromTextarea(w.landingOutcomes);
+    if (!outcomes.length) {
+      outcomes = [w.excerpt];
+    }
+    var includes = linesFromTextarea(w.landingIncludes);
+    if (!includes.length) {
+      includes =
+        w.kind === "meeting"
+          ? [
+              "живая онлайн-встреча с Надей",
+              "медитация и групповая практика",
+              "материалы и запись для участников",
+            ]
+          : [
+              "Telegram-канал с материалами и записями",
+              "чат группы для вопросов и поддержки",
+              "практики и задания с обратной связью",
+            ];
+    }
+    var programText =
+      w.landingProgram ||
+      "Программа сочетает групповые встречи, практики и поддержку в безопасном темпе — с опорой на ваш запрос и динамику группы.";
+    var invite =
+      w.landingInvite ||
+      "Если откликается тема — буду рада видеть вас в группе. Напишите в Telegram, и мы согласуем участие.";
+    var teleUrl = "https://t.me/nadya_rodionova?text=" + encodeURIComponent(w.telegramText);
+    var outcomesHtml = outcomes
+      .map(function (item) {
+        return "          <li>" + escapeHtml(item) + "</li>";
+      })
+      .join("\n");
+    var includesHtml = includes
+      .map(function (item) {
+        return "          <li>" + escapeHtml(item) + "</li>";
+      })
+      .join("\n");
+    var endDateJson = w.endDate ? ',\n    "endDate": "' + escapeJson(w.endDate) + '"' : "";
+    var metaDesc = escapeHtml(w.excerpt);
+
+    return (
+      '<!DOCTYPE html>\n<html lang="ru">\n<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <meta name="yandex-verification" content="7c4ee8d470948ff7">\n' +
+      '  <link rel="icon" href="/favicon.svg" type="image/svg+xml">\n' +
+      '  <link rel="icon" href="/favicon.ico" sizes="any">\n' +
+      '  <link rel="apple-touch-icon" href="/apple-touch-icon.png">\n' +
+      "  <title>" +
+      escapeHtml(shortTitle) +
+      " — Надя о балансе</title>\n" +
+      '  <meta name="description" content="' +
+      metaDesc +
+      '">\n' +
+      '  <meta name="robots" content="index, follow">\n' +
+      '  <link rel="canonical" href="' +
+      pageUrl +
+      '">\n' +
+      '  <link rel="stylesheet" href="../css/main.css">\n' +
+      '  <script type="application/ld+json">\n' +
+      "  {\n" +
+      '    "@context": "https://schema.org",\n' +
+      '    "@type": "Event",\n' +
+      '    "name": "' +
+      escapeJson(w.title) +
+      '",\n' +
+      '    "description": "' +
+      escapeJson(w.excerpt) +
+      '",\n' +
+      '    "startDate": "' +
+      w.date +
+      '"' +
+      endDateJson +
+      ",\n" +
+      '    "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",\n' +
+      '    "eventStatus": "https://schema.org/EventScheduled",\n' +
+      '    "organizer": { "@type": "Person", "name": "Надежда Родионова", "url": "' +
+      SITE_BASE +
+      '/" }\n' +
+      "  }\n" +
+      "  </script>\n" +
+      "</head>\n<body>\n" +
+      '  <a class="skip-link" href="#main">К содержанию</a>\n' +
+      '  <header class="site-header">\n' +
+      '    <div class="container header-inner">\n' +
+      '      <a class="logo" href="../index.html">Надя о балансе <span class="logo-mark" aria-hidden="true">🦋</span></a>\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Меню</button>\n' +
+      '      <nav id="site-nav" class="site-nav">\n' +
+      '        <a href="../about/index.html">Обо мне</a>\n' +
+      '        <a href="../services/index.html">С чем приходят</a>\n' +
+      '        <a href="index.html" aria-current="page">Мастерские</a>\n' +
+      '        <a href="../practice/index.html">Практика</a>\n' +
+      '        <a href="../blog/index.html">Статьи</a>\n' +
+      '        <a class="btn btn-sm" href="https://t.me/nadya_rodionova" target="_blank" rel="noopener">Записаться</a>\n' +
+      "      </nav>\n" +
+      "    </div>\n" +
+      "  </header>\n\n" +
+      '  <main id="main" class="workshop-detail">\n' +
+      '    <div class="workshop-detail-hero">\n' +
+      '      <div class="container workshop-detail-hero-inner">\n' +
+      '        <p class="breadcrumb"><a href="../index.html">Главная</a> / <a href="index.html">Мастерские</a> / ' +
+      escapeHtml(breadcrumb) +
+      "</p>\n" +
+      "        <p class=\"eyebrow\">" +
+      escapeHtml(eyebrow) +
+      "</p>\n" +
+      "        <h1>" +
+      escapeHtml(h1) +
+      "</h1>\n" +
+      '        <p class="workshop-detail-lead">' +
+      escapeHtml(lead) +
+      "</p>\n" +
+      '        <ul class="workshop-facts">\n' +
+      "          <li><strong>Когда</strong> " +
+      escapeHtml(w.dateLabel) +
+      "</li>\n" +
+      "          <li><strong>Формат</strong> " +
+      escapeHtml(w.format) +
+      "</li>\n" +
+      "          <li><strong>Участие</strong> " +
+      escapeHtml(w.price || "уточняется при записи") +
+      "</li>\n" +
+      "        </ul>\n" +
+      '        <div class="workshop-actions">\n' +
+      '          <a class="btn" href="' +
+      escapeAttr(teleUrl) +
+      '" target="_blank" rel="noopener">Записаться</a>\n' +
+      '          <a class="btn btn-ghost" href="index.html">Все мастерские</a>\n' +
+      "        </div>\n" +
+      "      </div>\n" +
+      "    </div>\n\n" +
+      '    <div class="container workshop-detail-body">\n' +
+      '      <section class="workshop-block">\n' +
+      "        <h2>Что получите</h2>\n" +
+      '        <ul class="workshop-outcomes">\n' +
+      outcomesHtml +
+      "\n        </ul>\n      </section>\n\n" +
+      '      <section class="workshop-block">\n' +
+      "        <h2>О формате</h2>\n" +
+      "        <p>" +
+      escapeHtml(programText) +
+      "</p>\n" +
+      "      </section>\n\n" +
+      '      <section class="workshop-block">\n' +
+      "        <h2>Даты</h2>\n" +
+      "        <p><strong>" +
+      escapeHtml(w.dateLabel) +
+      "</strong>. " +
+      escapeHtml(state.scheduleNote || "Даты могут незначительно сдвигаться.") +
+      "</p>\n      </section>\n\n" +
+      '      <section class="workshop-block">\n' +
+      "        <h2>Что будет в группе</h2>\n" +
+      '        <ul class="workshop-includes">\n' +
+      includesHtml +
+      "\n        </ul>\n      </section>\n\n" +
+      '      <section class="workshop-block workshop-invite">\n' +
+      "        <h2>Кого жду</h2>\n" +
+      "        <p>" +
+      escapeHtml(invite) +
+      "</p>\n" +
+      '        <p class="center hero-cta-row">\n' +
+      '          <a class="btn" href="' +
+      escapeAttr(teleUrl) +
+      '" target="_blank" rel="noopener">Написать Наде</a>\n' +
+      '          <a class="btn btn-ghost" href="index.html">Все мастерские</a>\n' +
+      "        </p>\n      </section>\n\n" +
+      '      <aside class="workshop-note">\n' +
+      "        <p>Групповой формат — не замена индивидуальной терапии. При острых состояниях важна поддержка специалиста.</p>\n" +
+      "      </aside>\n    </div>\n  </main>\n\n" +
+      '  <footer class="site-footer">\n' +
+      '    <div class="container footer-inner">\n' +
+      '      <p class="footer-brand">Надя о балансе 🦋</p>\n' +
+      '      <nav class="footer-nav">\n' +
+      '        <a href="../about/index.html">Обо мне</a>\n' +
+      '        <a href="index.html">Мастерские</a>\n' +
+      '        <a href="https://t.me/nadya_o_balanse" target="_blank" rel="noopener">Канал</a>\n' +
+      '        <a href="https://t.me/nadya_rodionova" target="_blank" rel="noopener">Запись</a>\n' +
+      "      </nav>\n" +
+      '      <p class="footer-note">Родионова Надежда Владимировна<br>ИНН 771671582715</p>\n' +
+      "    </div>\n  </footer>\n" +
+      '  <script src="../js/main.js"></script>\n' +
+      YANDEX_METRIKA +
+      "\n</body>\n</html>\n"
+    );
   }
 
   function putFile(path, content, sha, message) {

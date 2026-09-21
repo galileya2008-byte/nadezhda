@@ -65,7 +65,7 @@
           <h2>Мастерские и программы</h2>
           <button type="button" class="btn btn-sm" id="btn-add-workshop">+ Добавить</button>
         </div>
-        <p class="hint">Онлайн-программы на несколько недель, встречи и однодневные форматы — всё отображается на странице «Мастерские».</p>
+        <p class="hint">Для каждой мастерской создаётся лендинг <code>workshops/slug.html</code> (кроме отмеченных «не перезаписывать»). Карточки на сайте ведут на эти страницы.</p>
         <label class="field">
           <span>Примечание под расписанием</span>
           <input type="text" id="schedule-note">
@@ -132,8 +132,22 @@
         <label class="field"><span>Надпись о местах</span><input data-field="spots" placeholder="набор открыт"></label>
         <label class="field"><span>Цена</span><input data-field="price" placeholder="уточняется при записи"></label>
       </div>
-      <label class="field"><span>Страница подробностей (файл в папке workshops, необязательно)</span><input data-field="page" placeholder="kontakt-s-rodom.html"></label>
       <label class="field"><span>Текст для Telegram при записи</span><textarea data-field="telegramText" rows="2" required></textarea></label>
+      <fieldset class="landing-fieldset">
+        <legend>Лендинг workshops/<span data-slug-preview>slug</span>.html</legend>
+        <label class="field field-check">
+          <input type="checkbox" data-field="landingManual">
+          <span>Не перезаписывать HTML (уникальная страница, как «Контакт с родом»)</span>
+        </label>
+        <label class="field"><span>Заголовок на странице (если пусто — как «Название»)</span><input data-field="landingH1"></label>
+        <label class="field"><span>Подзаголовок в hero</span><input data-field="landingEyebrow" placeholder="Онлайн · 6 недель"></label>
+        <label class="field"><span>Вступление на лендинге</span><textarea data-field="landingLead" rows="3"></textarea></label>
+        <label class="field"><span>Что получат участники (каждый пункт с новой строки)</span><textarea data-field="landingOutcomes" rows="4"></textarea></label>
+        <label class="field"><span>О программе (абзац)</span><textarea data-field="landingProgram" rows="3"></textarea></label>
+        <label class="field"><span>Что входит (каждый пункт с новой строки)</span><textarea data-field="landingIncludes" rows="3"></textarea></label>
+        <label class="field"><span>Кого жду / приглашение</span><textarea data-field="landingInvite" rows="2"></textarea></label>
+        <label class="field"><span>Дата окончания для SEO (YYYY-MM-DD, необязательно)</span><input data-field="endDate" type="date"></label>
+      </fieldset>
     </article>
   </template>
 

@@ -15,6 +15,12 @@
    https://nadyarodionova.ru/rss.xml
    ```
 
+## После новой мастерской или программы
+
+При сохранении в админке обновляются `workshops/slug.html` и URL в `sitemap.xml`. В Вебmaster отправьте переобход, например:
+
+`https://nadyarodionova.ru/workshops/ваш-slug.html`
+
 ## После каждой новой статьи
 
 Админка при публикации обновляет:
