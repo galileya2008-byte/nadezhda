@@ -21,42 +21,58 @@
     </header>
 
     <section class="panel" id="login-panel">
-      <h2>Вход</h2>
-      <p class="hint">
-        Для сохранения изменений нужен GitHub-токен с доступом к репозиторию
-        <a href="https://github.com/galileya2008-byte/nadezhda" target="_blank" rel="noopener">galileya2008-byte/nadezhda</a>.
-        Токен хранится только в вашем браузере.
-      </p>
-      <label class="field">
-        <span>GitHub Personal Access Token</span>
-        <input type="password" id="github-token" autocomplete="off" placeholder="ghp_… или github_pat_…">
-      </label>
-      <p class="hint">
-        <a href="https://github.com/settings/tokens/new?description=Nadya+site+admin&scopes=repo" target="_blank" rel="noopener">Создать токен</a>
-        — отметьте доступ <strong>repo</strong> (или только этот репозиторий).
-      </p>
-      <button type="button" class="btn" id="btn-login">Войти и загрузить данные</button>
+      <h2>Как вы работаете?</h2>
+      <div class="login-modes">
+        <button type="button" class="login-mode-card" id="btn-mode-editor">
+          <strong>Готовлю контент</strong>
+          <span>Для Нади и авторов — без GitHub. Редактируете и скачиваете архив для публикации.</span>
+        </button>
+        <button type="button" class="login-mode-card" id="btn-mode-github">
+          <strong>Публикую на сайт</strong>
+          <span>Для сопровождения — вход по GitHub-токену, изменения сразу на сайте.</span>
+        </button>
+      </div>
+
+      <div id="github-login-block" hidden>
+        <p class="hint">
+          Токен с доступом к репозиторию
+          <a href="https://github.com/galileya2008-byte/nadezhda" target="_blank" rel="noopener">galileya2008-byte/nadezhda</a>.
+          Хранится только в браузере.
+        </p>
+        <label class="field">
+          <span>GitHub Personal Access Token</span>
+          <input type="password" id="github-token" autocomplete="off" placeholder="ghp_… или github_pat_…">
+        </label>
+        <p class="hint">
+          <a href="https://github.com/settings/tokens/new?description=Nadya+site+admin&scopes=repo" target="_blank" rel="noopener">Создать токен</a>
+          — доступ <strong>repo</strong> (или только этот репозиторий).
+        </p>
+        <button type="button" class="btn" id="btn-login">Войти и загрузить данные</button>
+      </div>
+
       <p class="status" id="login-status" role="status"></p>
     </section>
 
     <div id="app" hidden>
+      <p class="mode-banner" id="mode-banner" hidden></p>
       <nav class="tabs" role="tablist">
-        <button type="button" class="tab is-active" data-tab="workshops" role="tab">Мастерские</button>
+        <button type="button" class="tab is-active" data-tab="workshops" role="tab">Мастерские и программы</button>
         <button type="button" class="tab" data-tab="articles" role="tab">Статьи</button>
       </nav>
 
       <section class="panel tab-panel is-active" id="tab-workshops" role="tabpanel">
         <div class="panel-head">
-          <h2>Мастерские</h2>
-          <button type="button" class="btn btn-sm" id="btn-add-workshop">+ Новая мастерская</button>
+          <h2>Мастерские и программы</h2>
+          <button type="button" class="btn btn-sm" id="btn-add-workshop">+ Добавить</button>
         </div>
+        <p class="hint">Онлайн-программы на несколько недель, встречи и однодневные форматы — всё отображается на странице «Мастерские».</p>
         <label class="field">
           <span>Примечание под расписанием</span>
           <input type="text" id="schedule-note">
         </label>
         <div id="workshops-list" class="cards"></div>
         <div class="panel-foot">
-          <button type="button" class="btn" id="btn-save-workshops">Сохранить мастерские на сайте</button>
+          <button type="button" class="btn" id="btn-save-workshops">Сохранить на сайте</button>
           <p class="status" id="workshops-status" role="status"></p>
         </div>
       </section>
@@ -66,9 +82,11 @@
           <h2>Статьи</h2>
           <button type="button" class="btn btn-sm" id="btn-add-article">+ Новая статья</button>
         </div>
+        <p class="hint">При публикации обновляются страница статьи, каталог, <strong>sitemap.xml</strong> и <strong>rss.xml</strong> — это нужно для индексации в Яндексе.</p>
         <div id="articles-list" class="cards"></div>
         <div class="panel-foot">
-          <button type="button" class="btn" id="btn-save-articles">Сохранить статьи на сайте</button>
+          <button type="button" class="btn" id="btn-save-articles">Сохранить на сайте</button>
+          <button type="button" class="btn btn-ghost" id="btn-export-all" hidden>Скачать архив для публикации</button>
           <p class="status" id="articles-status" role="status"></p>
         </div>
       </section>
@@ -88,13 +106,21 @@
       <label class="field"><span>Название</span><input data-field="title" required></label>
       <label class="field"><span>Краткое описание</span><textarea data-field="excerpt" rows="2" required></textarea></label>
       <div class="grid-2">
+        <label class="field">
+          <span>Тип</span>
+          <select data-field="kind">
+            <option value="program">Программа (несколько недель)</option>
+            <option value="workshop">Мастерская</option>
+            <option value="meeting">Встреча / однодневный формат</option>
+          </select>
+        </label>
         <label class="field"><span>Формат</span><input data-field="format" placeholder="Онлайн · программа"></label>
-        <label class="field"><span>Длительность</span><input data-field="duration" placeholder="8 недель"></label>
       </div>
       <div class="grid-2">
+        <label class="field"><span>Длительность</span><input data-field="duration" placeholder="8 недель"></label>
         <label class="field"><span>Дата начала (YYYY-MM-DD)</span><input data-field="date" type="date" required></label>
-        <label class="field"><span>Подпись даты</span><input data-field="dateLabel" placeholder="10 сентября — 5 ноября" required></label>
       </div>
+      <label class="field"><span>Подпись даты</span><input data-field="dateLabel" placeholder="10 сентября — 5 ноября" required></label>
       <div class="grid-3">
         <label class="field">
           <span>Статус</span>
@@ -121,7 +147,7 @@
         <label class="field"><span>Дата публикации</span><input data-field="date" type="date" required></label>
       </div>
       <label class="field"><span>Заголовок</span><input data-field="title" required></label>
-      <label class="field"><span>Краткое описание (для списка и SEO)</span><textarea data-field="excerpt" rows="2" required></textarea></label>
+      <label class="field"><span>Краткое описание (список статей + SEO для Яндекса)</span><textarea data-field="excerpt" rows="2" required></textarea></label>
       <div class="grid-2">
         <label class="field"><span>Категория</span><input data-field="category" placeholder="Баланс с собой"></label>
         <label class="field"><span>Ключевые слова</span><input data-field="keywords" placeholder="выгорание, баланс"></label>
@@ -135,6 +161,7 @@
   </template>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script src="admin.js"></script>
 </body>
 </html>

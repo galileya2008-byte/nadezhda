@@ -227,3 +227,54 @@ a { color: var(--accent-dark); }
 
 .status.is-ok { color: var(--accent-dark); }
 .status.is-error { color: var(--danger); }
+
+.login-modes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .login-modes {
+    grid-template-columns: 1fr;
+  }
+}
+
+.login-mode-card {
+  text-align: left;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.15rem;
+  background: #faf8f5;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.login-mode-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 6px 20px rgba(30, 42, 50, 0.08);
+}
+
+.login-mode-card strong {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 1.05rem;
+}
+
+.login-mode-card span {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.mode-banner {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(42, 157, 143, 0.12);
+  border-radius: 10px;
+  font-size: 0.92rem;
+  color: var(--text);
+}
