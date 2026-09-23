@@ -42,8 +42,16 @@
       ? '<a class="workshop-title-link" href="' + escapeHtml(pageHref) + '">' + escapeHtml(title) + "</a>"
       : escapeHtml(title);
     var durationLine = w.duration ? w.duration : w.format;
-    var cardClass = "workshop-card" + (compact ? " workshop-card--compact" : "") + (pageHref ? " workshop-card--has-page" : "");
+    var isMini = w.kind === "mini";
+    var cardClass =
+      "workshop-card" +
+      (compact ? " workshop-card--compact" : "") +
+      (pageHref ? " workshop-card--has-page" : "") +
+      (isMini ? " workshop-card--mini" : "");
     var dataHref = pageHref ? ' data-page="' + escapeHtml(pageHref) + '"' : "";
+    var miniBadge = isMini
+      ? '<span class="workshop-badge workshop-badge--mini">Мини · 2 недели</span>'
+      : "";
 
     if (compact) {
       var compactBtn = pageHref
@@ -52,6 +60,7 @@
       return (
         "<li class=\"" + cardClass + "\"" + dataHref + ">" +
         '<div class="workshop-card-head">' +
+        miniBadge +
         '<span class="workshop-status ' + statusClass + '">' + statusText + "</span>" +
         "<h3>" + titleHtml + "</h3>" +
         "</div>" +
@@ -74,6 +83,7 @@
     return (
       "<li class=\"" + cardClass + "\"" + dataHref + ">" +
       '<div class="workshop-card-head">' +
+      miniBadge +
       '<span class="workshop-status ' + statusClass + '">' + statusText + "</span>" +
       "<h3>" + titleHtml + "</h3>" +
       "</div>" +
@@ -89,6 +99,40 @@
       "</div>" +
       "</li>"
     );
+  }
+
+  function renderMiniIntro(program) {
+    if (!program || !program.paragraphs || !program.paragraphs.length) return "";
+    var title = program.title ? "<h2 class=\"workshops-mini-intro-title\">" + escapeHtml(program.title) + "</h2>" : "";
+    var subtitle = program.subtitle
+      ? "<p class=\"workshops-mini-intro-sub\">" + escapeHtml(program.subtitle) + "</p>"
+      : "";
+    var body = program.paragraphs
+      .map(function (p) {
+        return "<p>" + escapeHtml(p) + "</p>";
+      })
+      .join("");
+    return (
+      '<li class="workshops-mini-intro">' +
+      '<div class="workshops-mini-intro-inner">' +
+      title +
+      subtitle +
+      body +
+      "</div></li>"
+    );
+  }
+
+  function renderWorkshopsTimeline(items, program) {
+    var html = [];
+    var miniIntroShown = false;
+    items.forEach(function (w) {
+      if (w.kind === "mini" && !miniIntroShown && program) {
+        html.push(renderMiniIntro(program));
+        miniIntroShown = true;
+      }
+      html.push(renderWorkshopCard(w, false));
+    });
+    return html.join("");
   }
 
   function loadWorkshops() {
@@ -108,7 +152,7 @@
         });
         if (listEl) {
           listEl.innerHTML = items.length
-            ? items.map(function (w) { return renderWorkshopCard(w, false); }).join("")
+            ? renderWorkshopsTimeline(items, data.miniProgram)
             : "<li><p>Пока нет запланированных мастерских.</p></li>";
           bindWorkshopCardClicks(listEl);
           var noteEl = document.getElementById("workshops-schedule-note");
