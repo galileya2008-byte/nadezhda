@@ -1468,6 +1468,11 @@ a:hover {
   line-height: 1.6;
 }
 
+.case-quote strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
 .case-card--home .case-quotes {
   grid-template-columns: 1fr;
 }
