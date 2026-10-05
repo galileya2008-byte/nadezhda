@@ -1407,6 +1407,83 @@ a:hover {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
+/* Кейсы / отзывы */
+.cases-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.case-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.6rem 1.75rem;
+  border-top: 3px solid var(--gold);
+  box-shadow: 0 8px 28px rgba(26, 51, 64, 0.06);
+}
+
+.case-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 1rem;
+  margin-bottom: 1.15rem;
+}
+
+.case-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+  background: var(--gold-soft);
+  color: var(--gold-dark);
+}
+
+.case-card-head h3 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  line-height: 1.2;
+}
+
+.case-quotes {
+  display: grid;
+  gap: 1rem;
+}
+
+.case-quote {
+  margin: 0;
+  padding: 1rem 1.15rem;
+  background: linear-gradient(165deg, rgba(126, 200, 227, 0.1), transparent 70%);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+}
+
+.case-quote p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.case-card--home .case-quotes {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .case-card--home .case-quotes {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 900px) {
+  #workshop-cases .case-quotes {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 .workshop-detail-hero {
   padding: 2.25rem 0 2.5rem;
   background:
