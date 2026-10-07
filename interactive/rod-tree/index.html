@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="yandex-verification" content="7c4ee8d470948ff7">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <title>Древо рода — интерактив | Надя о балансе</title>
+  <meta name="description" content="Интерактив «Древо рода»: 6 вопросов, чтобы понять, какая зона семейной истории зовёт вас сейчас — корни, опора, отношения или ресурсы.">
+  <link rel="canonical" href="https://nadyarodionova.ru/interactive/rod-tree/">
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="rod-tree.css">
+</head>
+<body class="rod-page">
+  <a class="skip-link" href="#main">К содержанию</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="../../index.html">Надя о балансе <span class="logo-mark" aria-hidden="true">🦋</span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Меню</button>
+      <nav id="site-nav" class="site-nav">
+        <a href="../../about/index.html">Обо мне</a>
+        <a href="../../services/index.html">С чем приходят</a>
+        <a href="../../workshops/index.html">Мастерские</a>
+        <a href="../../practice/index.html">Практика</a>
+        <a href="../../blog/index.html">Статьи</a>
+        <a class="btn btn-sm" href="https://t.me/nadya_rodionova" target="_blank" rel="noopener">Записаться</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="rod-shell">
+      <p class="breadcrumb"><a href="../../index.html">Главная</a> / <a href="../../workshops/index.html">Мастерские</a> / Древо рода</p>
+
+      <div class="rod-app" id="rod-app">
+        <div class="rod-layout">
+          <div class="rod-art" aria-hidden="true">
+            <div class="rod-tree-photo">
+              <img id="rod-tree-img" src="../../assets/rod-tree-scene.jpg" alt="">
+              <div class="rod-tree-glow" id="rod-tree-glow"></div>
+              <div class="rod-zone rod-zone--crown" data-zone="crown"></div>
+              <div class="rod-zone rod-zone--branches" data-zone="branches"></div>
+              <div class="rod-zone rod-zone--trunk" data-zone="trunk"></div>
+              <div class="rod-zone rod-zone--roots" data-zone="roots"></div>
+            </div>
+          </div>
+
+          <div class="rod-side">
+            <section class="rod-panel rod-screen" id="rod-intro">
+              <p class="rod-kicker">Интерактив · 6 вопросов</p>
+              <h1>Какая зона вашего Древа рода сейчас зовёт уделить внимание?</h1>
+              <p class="rod-lead">Ответьте на 6 вопросов и выберите направление для дальнейшего исследования — история семьи, внутренняя опора, отношения или ресурсы рода.</p>
+              <button type="button" class="rod-btn rod-btn--primary rod-btn--block" id="rod-start">Исследовать своё Древо</button>
+              <p class="rod-note">Ответы обрабатываются в вашем браузере и не отправляются на сервер. Это не диагностика и не тест «силы рода».</p>
+            </section>
+
+            <section class="rod-panel rod-screen" id="rod-quiz" hidden>
+              <p class="rod-progress-label" id="rod-progress-label" role="progressbar" aria-valuemin="1" aria-valuenow="1" aria-valuemax="6">Вопрос 1 из 6</p>
+              <div class="rod-progress" id="rod-progress" aria-hidden="true"></div>
+              <h2 id="rod-question-title">Вопрос</h2>
+              <div class="rod-options" id="rod-options" role="group" aria-labelledby="rod-question-title"></div>
+              <div class="rod-actions">
+                <button type="button" class="rod-btn rod-btn--ghost" id="rod-back">Назад</button>
+                <button type="button" class="rod-btn rod-btn--primary" id="rod-next" disabled>Далее</button>
+              </div>
+            </section>
+
+            <section class="rod-panel rod-screen" id="rod-result" hidden>
+              <p class="rod-kicker">Ваше направление</p>
+              <h2>Результат</h2>
+              <div id="rod-result-live" aria-live="polite"></div>
+              <p class="rod-lead" style="margin-top: 1.25rem;">Это откликнулось вам в результате? Напишите Наде — обсудим, с какой темы и формата начать.</p>
+              <div class="rod-draft" id="rod-draft"></div>
+              <div class="rod-actions">
+                <a class="rod-btn rod-btn--primary" id="rod-telegram" href="https://t.me/nadya_rodionova" target="_blank" rel="noopener">Обсудить своё Древо с Надей</a>
+                <button type="button" class="rod-btn rod-btn--ghost" id="rod-copy">Скопировать сообщение</button>
+                <button type="button" class="rod-btn rod-btn--ghost" id="rod-share">Поделиться интерактивом</button>
+                <button type="button" class="rod-btn rod-btn--ghost" id="rod-restart">Пройти ещё раз</button>
+              </div>
+              <p class="rod-copy-status" id="rod-copy-status" role="status"></p>
+              <div class="rod-soft-links">
+                <a href="../../workshops/rod-i-sila-roda-mini.html">Мини-мастерская «Род и сила рода»</a>
+                <a href="../../workshops/kontakt-s-rodom.html">Программа «Контакт с родом»</a>
+                <a href="../../workshops/index.html">Все мастерские</a>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-brand">Надя о балансе 🦋</p>
+      <nav class="footer-nav">
+        <a href="../../workshops/index.html">Мастерские</a>
+        <a href="https://t.me/nadya_o_balanse" target="_blank" rel="noopener">Канал</a>
+        <a href="https://t.me/nadya_rodionova" target="_blank" rel="noopener">Запись</a>
+      </nav>
+      <p class="footer-note">Родионова Надежда Владимировна<br>ИНН 771671582715</p>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script src="config.js"></script>
+  <script src="rod-tree.js"></script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=112670594', 'ym');
+    ym(112670594, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/112670594" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+</body>
+</html>

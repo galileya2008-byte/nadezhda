@@ -1,0 +1,372 @@
+/* Древо рода — локальные стили интерактива */
+.rod-page {
+  --rod-paper: #f4f9f8;
+  --rod-ink: #203c40;
+  --rod-teal: #278e88;
+  --rod-gold: #ae9153;
+  --rod-muted: #65807c;
+  --rod-line: #dbe8e5;
+  background: var(--rod-paper);
+  color: var(--rod-ink);
+}
+
+.rod-shell {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 3rem;
+}
+
+.rod-app {
+  background: var(--rod-paper);
+  border: 1px solid var(--rod-line);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(32, 60, 64, 0.06);
+}
+
+.rod-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 1.35rem;
+  align-items: center;
+  padding: 1.5rem;
+}
+
+.rod-art {
+  text-align: center;
+}
+
+.rod-tree-photo {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 0.95;
+  border-radius: 20px;
+  background: #dceae5;
+  margin: 0 auto;
+}
+
+.rod-tree-photo img {
+  position: absolute;
+  width: 169%;
+  max-width: none;
+  height: 110%;
+  object-fit: fill;
+  left: -2%;
+  top: -8%;
+  pointer-events: none;
+  user-select: none;
+}
+
+.rod-tree-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.12;
+  transition: opacity 0.45s ease;
+  background: radial-gradient(ellipse at 46% 55%, rgba(230, 209, 141, 0.45), transparent 55%);
+}
+
+.rod-tree-glow.is-on {
+  opacity: 0.55;
+}
+
+.rod-zone {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  border-radius: 50%;
+  mix-blend-mode: multiply;
+}
+
+.rod-zone.is-active {
+  opacity: 0.72;
+}
+
+.rod-zone--crown {
+  top: 4%;
+  height: 28%;
+  background: radial-gradient(ellipse at 50% 50%, rgba(174, 145, 83, 0.55), transparent 70%);
+}
+
+.rod-zone--branches {
+  top: 22%;
+  height: 32%;
+  background: radial-gradient(ellipse at 50% 40%, rgba(39, 142, 136, 0.42), transparent 72%);
+}
+
+.rod-zone--trunk {
+  top: 48%;
+  height: 26%;
+  left: 28%;
+  right: 28%;
+  background: radial-gradient(ellipse at 50% 50%, rgba(32, 60, 64, 0.28), transparent 70%);
+}
+
+.rod-zone--roots {
+  bottom: 2%;
+  height: 26%;
+  top: auto;
+  background: radial-gradient(ellipse at 50% 70%, rgba(174, 145, 83, 0.5), transparent 72%);
+}
+
+.rod-panel {
+  background: #fff;
+  padding: 1.45rem 1.4rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 35px rgba(32, 60, 64, 0.05);
+}
+
+.rod-kicker {
+  margin: 0 0 0.5rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rod-muted);
+  font-weight: 600;
+}
+
+.rod-panel h1,
+.rod-panel h2 {
+  font-family: var(--font-serif, Georgia, serif);
+  font-weight: 500;
+  line-height: 1.2;
+  margin: 0 0 0.85rem;
+  color: var(--rod-ink);
+}
+
+.rod-panel h1 {
+  font-size: clamp(1.55rem, 3vw, 1.9rem);
+}
+
+.rod-panel h2 {
+  font-size: clamp(1.25rem, 2.5vw, 1.55rem);
+}
+
+.rod-lead {
+  margin: 0 0 1.1rem;
+  color: var(--rod-muted);
+  font-size: 0.98rem;
+}
+
+.rod-progress {
+  display: flex;
+  gap: 6px;
+  margin: 0 0 1rem;
+}
+
+.rod-progress span {
+  height: 4px;
+  flex: 1;
+  border-radius: 4px;
+  background: #dce8e2;
+}
+
+.rod-progress span.is-on {
+  background: var(--rod-teal);
+}
+
+.rod-progress-label {
+  margin: 0 0 0.75rem;
+  font-size: 0.85rem;
+  color: var(--rod-muted);
+}
+
+.rod-options {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.rod-option {
+  font: inherit;
+  min-height: 48px;
+  border: 1px solid #dce6e2;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  background: #f8fbfa;
+  color: var(--rod-ink);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.rod-option:hover,
+.rod-option:focus-visible {
+  border-color: var(--rod-teal);
+  background: #edf6f2;
+  outline: none;
+}
+
+.rod-option.is-selected {
+  border-color: var(--rod-teal);
+  background: rgba(39, 142, 136, 0.12);
+  box-shadow: inset 0 0 0 1px var(--rod-teal);
+}
+
+.rod-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.15rem;
+}
+
+.rod-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.7rem 1.25rem;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+}
+
+.rod-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.rod-btn--primary {
+  background: var(--rod-teal);
+  color: #fff;
+}
+
+.rod-btn--primary:hover:not(:disabled) {
+  background: #1f7a75;
+  color: #fff;
+}
+
+.rod-btn--ghost {
+  background: transparent;
+  color: var(--rod-teal);
+  border: 1px solid var(--rod-line);
+}
+
+.rod-btn--ghost:hover {
+  background: #fff;
+  color: var(--rod-teal);
+}
+
+.rod-btn--block {
+  width: 100%;
+}
+
+.rod-note {
+  margin: 1rem 0 0;
+  font-size: 0.8rem;
+  color: var(--rod-muted);
+}
+
+.rod-result-list {
+  display: grid;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.rod-result-card {
+  padding: 1rem 1.1rem;
+  border-radius: 14px;
+  border-left: 3px solid var(--rod-gold);
+  background: linear-gradient(165deg, rgba(174, 145, 83, 0.12), #f8fbfa 60%);
+}
+
+.rod-result-card h3 {
+  margin: 0 0 0.45rem;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+.rod-result-card p {
+  margin: 0 0 0.65rem;
+  color: var(--rod-muted);
+  font-size: 0.95rem;
+}
+
+.rod-result-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.rod-result-links a {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--rod-teal);
+}
+
+.rod-draft {
+  margin: 1rem 0;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  background: #f0f6f4;
+  border: 1px solid var(--rod-line);
+  font-size: 0.92rem;
+  color: var(--rod-ink);
+  white-space: pre-wrap;
+}
+
+.rod-soft-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin: 0.75rem 0 0;
+  font-size: 0.9rem;
+}
+
+.rod-soft-links a {
+  color: var(--rod-teal);
+  font-weight: 600;
+}
+
+.rod-copy-status {
+  min-height: 1.25rem;
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  color: var(--rod-teal);
+}
+
+.rod-screen[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .rod-layout {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .rod-tree-photo {
+    aspect-ratio: 1.25;
+    max-width: 420px;
+  }
+
+  .rod-tree-photo img {
+    height: 140%;
+    top: -10%;
+  }
+
+  .rod-panel {
+    padding: 1.2rem 1.1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .rod-shell {
+    padding-inline: 0.65rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rod-tree-glow,
+  .rod-zone,
+  .rod-option {
+    transition: none;
+  }
+}

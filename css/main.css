@@ -1407,6 +1407,33 @@ a:hover {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
+/* Анонс интерактива «Древо рода» */
+.rod-teaser {
+  padding: 1.5rem 1.6rem;
+  border-radius: var(--radius);
+  border: 1px solid rgba(39, 142, 136, 0.25);
+  border-left: 4px solid #278e88;
+  background:
+    radial-gradient(ellipse 70% 80% at 100% 0%, rgba(174, 145, 83, 0.14), transparent 55%),
+    linear-gradient(165deg, rgba(39, 142, 136, 0.08), var(--surface) 55%);
+}
+
+.rod-teaser h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3vw, 1.85rem);
+  margin: 0 0 0.55rem;
+}
+
+.rod-teaser p {
+  margin: 0 0 1.1rem;
+  color: var(--text-muted);
+  max-width: 40em;
+}
+
+.rod-teaser .eyebrow {
+  margin-bottom: 0.35rem;
+}
+
 /* Кейсы / отзывы */
 .cases-list {
   display: grid;

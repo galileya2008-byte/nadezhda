@@ -685,6 +685,7 @@
       { loc: SITE_BASE + "/about/", changefreq: "monthly", priority: "0.9" },
       { loc: SITE_BASE + "/services/", changefreq: "monthly", priority: "0.9" },
       { loc: SITE_BASE + "/workshops/", changefreq: "weekly", priority: "0.95" },
+      { loc: SITE_BASE + "/interactive/rod-tree/", changefreq: "monthly", priority: "0.9" },
       { loc: SITE_BASE + "/practice/", changefreq: "monthly", priority: "0.85" },
       { loc: SITE_BASE + "/blog/", changefreq: "weekly", priority: "0.9" },
       { loc: SITE_BASE + "/practice/tri-voprosa-pered-snom.html", changefreq: "monthly", priority: "0.85" },
