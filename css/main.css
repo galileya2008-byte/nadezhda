@@ -1265,6 +1265,143 @@ a:hover {
   color: var(--gold-dark);
 }
 
+.workshop-status--clarify {
+  background: #ebe6df;
+  color: #5c5348;
+}
+
+.workshop-schedule-pill {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--border, #d8d2c8);
+  border-radius: 999px;
+}
+
+.service-format {
+  margin: 0 0 2rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border, #e5e0d8);
+}
+
+.service-format:last-of-type {
+  border-bottom: 0;
+}
+
+.service-format h2 {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+}
+
+.service-format-grid {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 1.25rem;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.service-format-grid li strong {
+  display: block;
+  margin-bottom: 0.2rem;
+  color: var(--text);
+}
+
+.service-format-grid li p,
+.service-format-grid li {
+  color: var(--text-muted);
+  font-size: 0.98rem;
+  margin: 0;
+}
+
+.faq-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.faq-list li {
+  padding: 1rem 1.15rem;
+  background: var(--surface-alt, #f7f4ef);
+  border-radius: 4px;
+}
+
+.faq-list h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.05rem;
+  font-family: var(--font-serif);
+}
+
+.faq-list p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.96rem;
+}
+
+.methods-map {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.methods-map li {
+  padding-left: 0;
+}
+
+.methods-map strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.article-toc {
+  margin: 1.25rem 0 1.75rem;
+  padding: 1rem 1.15rem;
+  background: var(--surface-alt, #f7f4ef);
+  border-radius: 4px;
+}
+
+.article-toc h2 {
+  margin: 0 0 0.6rem;
+  font-size: 1rem;
+}
+
+.article-toc ol {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.article-toc a {
+  color: var(--accent-dark, #2f4a3a);
+}
+
+.article-author {
+  margin-top: 0.75rem;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.article-related {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border, #e5e0d8);
+}
+
+.article-related ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
 .workshop-excerpt {
   margin: 0 0 1rem;
   color: var(--text-muted);

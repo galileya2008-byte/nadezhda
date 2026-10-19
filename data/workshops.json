@@ -1,5 +1,5 @@
 {
-  "scheduleNote": "Даты мастерских могут незначительно сдвигаться.",
+  "scheduleNote": "Даты мастерских могут незначительно сдвигаться. Открытость записи и доступ к материалам уточняйте у Нади — они не всегда совпадают с датами проведения.",
   "miniProgram": {
     "id": "rod-i-sila-roda",
     "title": "Род и сила рода",
@@ -7,7 +7,7 @@
     "paragraphs": [
       "Знаете, есть очень разные семейные истории: одни — больше счастливые, другие — больше несчастные. Однако и в тех, и в других есть много силы, много любви, возможностей, даров. Просто в одном случае эта сила была направлена на укрепление, а в другом — на ослабление рода.",
       "Сейчас как раз наступает такое время, в которое можно, уделив внимание своим предкам и своим корням, сделать более ясной и крепкой свою систему рода.",
-      "Для тех, кто пока не готов пройти большую восьминедельную мастерскую, я сделала короткий вариант — 2 недели, ёмкий и эффективный. Две группы «Род и сила рода»: можно записаться на одну ступень или на обе."
+      "Для тех, кто пока не готов пройти большую восьминедельную мастерскую, я сделала короткий вариант — 2 недели, ёмкий и эффективный. Две группы «Род и сила рода»: можно записаться на одну ступень или на обе — когда набор открыт."
     ]
   },
   "workshops": [
@@ -22,12 +22,14 @@
       "date": "2026-09-10",
       "dateLabel": "10 сентября — 5 ноября",
       "endDate": "2026-11-05",
-      "status": "open",
-      "spots": "набор открыт",
+      "scheduleStatus": "ongoing",
+      "enrollment": "clarify",
+      "recordingAvailable": "unknown",
+      "spots": "уточнить доступность",
       "price": "практик 30 000 ₽ · вип-практик 60 000 ₽",
       "page": "kontakt-s-rodom.html",
       "landingManual": true,
-      "telegramText": "Здравствуйте! Хочу записаться на мастерскую «Контакт с родом, отношения в роду, семья» (10 сентября — 5 ноября)."
+      "telegramText": "Здравствуйте! Хочу уточнить доступность мастерской «Контакт с родом, отношения в роду, семья» (10 сентября — 5 ноября)."
     },
     {
       "slug": "rod-i-sila-roda-1",
@@ -41,12 +43,14 @@
       "date": "2026-09-27",
       "dateLabel": "27 сентября — 10 октября",
       "endDate": "2026-10-10",
-      "status": "open",
-      "spots": "набор открыт",
+      "scheduleStatus": "completed",
+      "enrollment": "closed",
+      "recordingAvailable": "unknown",
+      "spots": "группа завершена",
       "price": "10 000 ₽",
       "page": "rod-i-sila-roda-mini.html",
       "landingManual": true,
-      "telegramText": "Здравствуйте! Хочу записаться на 1 ступень мини-мастерской «Род и сила рода» (27 сентября — 10 октября)."
+      "telegramText": "Здравствуйте! Хочу уточнить доступность материалов 1 ступени мини-мастерской «Род и сила рода» (27 сентября — 10 октября)."
     },
     {
       "slug": "rod-i-sila-roda-2",
@@ -60,8 +64,10 @@
       "date": "2026-10-23",
       "dateLabel": "23 октября — 5 ноября",
       "endDate": "2026-11-05",
-      "status": "open",
-      "spots": "набор открыт",
+      "scheduleStatus": "planned",
+      "enrollment": "open",
+      "recordingAvailable": "unknown",
+      "spots": "запись открыта",
       "price": "10 000 ₽ · обе ступени 15 000 ₽",
       "page": "rod-i-sila-roda-mini.html",
       "landingManual": true,
@@ -78,8 +84,10 @@
       "date": "2026-11-08",
       "dateLabel": "8 ноября — 18 декабря",
       "endDate": "2026-12-18",
-      "status": "open",
-      "spots": "набор открыт",
+      "scheduleStatus": "planned",
+      "enrollment": "open",
+      "recordingAvailable": "unknown",
+      "spots": "запись открыта",
       "price": "уточняется при записи",
       "page": "otnosheniya-muzhskaya-zhenskaya.html",
       "landingManual": false,
@@ -102,8 +110,10 @@
       "duration": "1 день",
       "date": "2026-12-21",
       "dateLabel": "21 декабря",
-      "status": "open",
-      "spots": "набор открыт",
+      "scheduleStatus": "planned",
+      "enrollment": "open",
+      "recordingAvailable": "unknown",
+      "spots": "запись открыта",
       "price": "уточняется при записи",
       "page": "zimnee-solntsestoyanie.html",
       "landingManual": false,
@@ -126,8 +136,10 @@
       "duration": "1 вечер",
       "date": "2026-12-26",
       "dateLabel": "26 декабря",
-      "status": "open",
-      "spots": "набор открыт",
+      "scheduleStatus": "planned",
+      "enrollment": "open",
+      "recordingAvailable": "unknown",
+      "spots": "запись открыта",
       "price": "уточняется при записи",
       "page": "novogodnyaya-meditsiya-2026.html",
       "landingManual": false,
