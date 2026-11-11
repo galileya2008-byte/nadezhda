@@ -318,14 +318,11 @@ function replaceListById(html, id, innerHtml) {
 }
 
 function replaceByIdContent(html, id, innerHtml) {
-  const re = new RegExp(
-    '(<[a-z][^>]*\\sid="' + id + '"[^>]*>)[\\s\\S]*?(</[a-z]+>)',
-    "i"
-  );
-  if (!re.test(html)) {
-    throw new Error('Не найден элемент id="' + id + '"');
-  }
-  return html.replace(re, "$1\n" + innerHtml + "\n      $2");
+  const re = new RegExp('(<([a-z][a-z0-9]*)\\b[^>]*\\sid="' + id + '"[^>]*>)[\\s\\S]*?(</\\2\\s*>)', 'i');
+  if (!re.test(html)) throw new Error('Не найден элемент id="' + id + '"');
+  return html.replace(re, function (_, open, tag, close) {
+    return open + "\n" + innerHtml + "\n      " + close;
+  });
 }
 
 function rfc822(iso) {
