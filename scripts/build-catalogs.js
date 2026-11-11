@@ -301,14 +301,20 @@ function sortWorkshops(items) {
 }
 
 function replaceListById(html, id, innerHtml) {
-  const re = new RegExp(
-    '(<ul[^>]*\\sid="' + id + '"[^>]*>)[\\s\\S]*?(</ul>)',
-    "i"
-  );
-  if (!re.test(html)) {
-    throw new Error('Не найден <ul id="' + id + '">');
+  const open = new RegExp('<ul\\b[^>]*\\sid="' + id + '"[^>]*>', 'i').exec(html);
+  if (!open) throw new Error('Не найден <ul id="' + id + '">');
+  const tags = /<\/?ul\b[^>]*>/gi;
+  tags.lastIndex = open.index + open[0].length;
+  let depth = 1;
+  let tag;
+  while ((tag = tags.exec(html))) {
+    depth += /^<\//.test(tag[0]) ? -1 : 1;
+    if (depth === 0) {
+      return html.slice(0, open.index + open[0].length) +
+        "\n" + innerHtml + "\n      " + html.slice(tag.index);
+    }
   }
-  return html.replace(re, "$1\n" + innerHtml + "\n      $2");
+  throw new Error('Не закрыт <ul id="' + id + '">');
 }
 
 function replaceByIdContent(html, id, innerHtml) {
